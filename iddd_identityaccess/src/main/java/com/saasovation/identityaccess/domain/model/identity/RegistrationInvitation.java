@@ -172,7 +172,7 @@ public class RegistrationInvitation extends ConcurrencySafeEntity {
         // either both dates must be null, or both dates must be set
         if (this.startingOn() == null && this.until() == null) {
             ; // valid
-        } else if (this.startingOn() == null || this.until() == null &&
+        } else if ((this.startingOn() == null || this.until() == null) &&
                    this.startingOn() != this.until()) {
             throw new IllegalStateException("This is an invalid open-ended invitation.");
         } else if (this.startingOn().after(this.until())) {
