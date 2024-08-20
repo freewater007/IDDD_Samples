@@ -125,6 +125,7 @@ public abstract class ApplicationServiceTest extends TestCase {
         return user;
     }
 
+    @Override
     protected void setUp() throws Exception {
         System.out.println(">>>>>>>>>>>>>>>>>>>> " + this.getName());
 
