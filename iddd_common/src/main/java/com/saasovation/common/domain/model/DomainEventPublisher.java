@@ -35,7 +35,7 @@ public class DomainEventPublisher {
         return instance.get();
     }
 
-    public <T> void publish(final T aDomainEvent) {
+    public <T extends DomainEvent> void publish(final T aDomainEvent) {
         if (!this.isPublishing() && this.hasSubscribers()) {
 
             try {
@@ -60,7 +60,7 @@ public class DomainEventPublisher {
         }
     }
 
-    public void publishAll(Collection<DomainEvent> aDomainEvents) {
+    public <T extends DomainEvent> void publishAll(Collection<T> aDomainEvents) {
         for (DomainEvent domainEvent : aDomainEvents) {
             this.publish(domainEvent);
         }
@@ -73,7 +73,7 @@ public class DomainEventPublisher {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> void subscribe(DomainEventSubscriber<T> aSubscriber) {
+    public <T extends DomainEvent> void subscribe(DomainEventSubscriber<T> aSubscriber) {
         if (!this.isPublishing()) {
             this.ensureSubscribersList();
 
