@@ -14,6 +14,7 @@
 
 package com.saasovation.identityaccess.domain.model.identity;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -75,7 +76,7 @@ public class Group extends ConcurrencySafeEntity {
     }
 
     public Set<GroupMember> groupMembers() {
-        return this.groupMembers;
+        return Collections.unmodifiableSet(this.groupMembers);
     }
 
     public boolean isMember(User aUser, GroupMemberService aGroupMemberService) {
