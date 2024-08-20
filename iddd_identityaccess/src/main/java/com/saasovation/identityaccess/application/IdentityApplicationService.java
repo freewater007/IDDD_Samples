@@ -310,7 +310,7 @@ public class IdentityApplicationService {
                             new ContactInformation(
                                     new EmailAddress(aCommand.getEmailAddress()),
                                     new PostalAddress(
-                                            aCommand.getAddressStateProvince(),
+                                            aCommand.getAddressStreetAddress(),
                                             aCommand.getAddressCity(),
                                             aCommand.getAddressStateProvince(),
                                             aCommand.getAddressPostalCode(),
