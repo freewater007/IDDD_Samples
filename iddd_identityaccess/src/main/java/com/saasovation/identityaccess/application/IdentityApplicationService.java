@@ -280,7 +280,7 @@ public class IdentityApplicationService {
                                 aCommand.getAdministorLastName()),
                         new EmailAddress(aCommand.getEmailAddress()),
                         new PostalAddress(
-                                aCommand.getAddressStateProvince(),
+                                aCommand.getAddressStreetAddress(),
                                 aCommand.getAddressCity(),
                                 aCommand.getAddressStateProvince(),
                                 aCommand.getAddressPostalCode(),
