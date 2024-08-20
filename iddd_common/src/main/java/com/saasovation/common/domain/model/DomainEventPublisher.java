@@ -21,6 +21,7 @@ import java.util.List;
 public class DomainEventPublisher {
 
     private static final ThreadLocal<DomainEventPublisher> instance = new ThreadLocal<DomainEventPublisher>() {
+        @Override
         protected DomainEventPublisher initialValue() {
             return new DomainEventPublisher();
         }
@@ -28,14 +29,13 @@ public class DomainEventPublisher {
 
     private boolean publishing;
 
-    @SuppressWarnings("rawtypes")
-    private List subscribers;
+    private List<DomainEventSubscriber<DomainEvent>> subscribers;
 
     public static DomainEventPublisher instance() {
         return instance.get();
     }
 
-    public <T> void publish(final T aDomainEvent) {
+    public void publish(final DomainEvent aDomainEvent) {
         if (!this.isPublishing() && this.hasSubscribers()) {
 
             try {
@@ -43,10 +43,9 @@ public class DomainEventPublisher {
 
                 Class<?> eventType = aDomainEvent.getClass();
 
-                @SuppressWarnings("unchecked")
-                List<DomainEventSubscriber<T>> allSubscribers = this.subscribers();
+                List<DomainEventSubscriber<DomainEvent>> allSubscribers = this.subscribers();
 
-                for (DomainEventSubscriber<T> subscriber : allSubscribers) {
+                for (DomainEventSubscriber<DomainEvent> subscriber : allSubscribers) {
                     Class<?> subscribedToType = subscriber.subscribedToEventType();
 
                     if (eventType == subscribedToType || subscribedToType == DomainEvent.class) {
@@ -72,11 +71,9 @@ public class DomainEventPublisher {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> void subscribe(DomainEventSubscriber<T> aSubscriber) {
+    public void subscribe(DomainEventSubscriber<DomainEvent> aSubscriber) {
         if (!this.isPublishing()) {
             this.ensureSubscribersList();
-
             this.subscribers().add(aSubscriber);
         }
     }
@@ -88,10 +85,9 @@ public class DomainEventPublisher {
         this.ensureSubscribersList();
     }
 
-    @SuppressWarnings("rawtypes")
     private void ensureSubscribersList() {
         if (!this.hasSubscribers()) {
-            this.setSubscribers(new ArrayList());
+            this.setSubscribers(new ArrayList<>());
         }
     }
 
@@ -107,13 +103,11 @@ public class DomainEventPublisher {
         return this.subscribers() != null;
     }
 
-    @SuppressWarnings("rawtypes")
-    private List subscribers() {
+    private List<DomainEventSubscriber<DomainEvent>> subscribers() {
         return this.subscribers;
     }
 
-    @SuppressWarnings("rawtypes")
-    private void setSubscribers(List aSubscriberList) {
+    private void setSubscribers(List<DomainEventSubscriber<DomainEvent>> aSubscriberList) {
         this.subscribers = aSubscriberList;
     }
 }

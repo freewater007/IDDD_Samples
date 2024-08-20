@@ -14,7 +14,7 @@
 
 package com.saasovation.common.domain.model;
 
-public interface DomainEventSubscriber<T> {
+public interface DomainEventSubscriber<T extends DomainEvent> {
 
     public void handleEvent(final T aDomainEvent);
 
