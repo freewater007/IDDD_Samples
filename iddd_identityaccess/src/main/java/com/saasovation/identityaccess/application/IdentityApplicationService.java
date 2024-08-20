@@ -268,6 +268,8 @@ public class IdentityApplicationService {
         return group;
     }
 
+    // user-aggregate affinity: 这里一个事务里面新建了多个聚合，
+    // 我觉得是应用了user-aggregate affinity（用户聚合亲和性）这种判断
     @Transactional
     public Tenant provisionTenant(ProvisionTenantCommand aCommand) {
 

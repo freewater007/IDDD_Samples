@@ -66,13 +66,15 @@ public class AbstractSerializer {
                 .registerTypeAdapter(Date.class, new DateDeserializer()).setPrettyPrinting().create();
     }
 
-    private class DateSerializer implements JsonSerializer<Date> {
+    private static class DateSerializer implements JsonSerializer<Date> {
+        @Override
         public JsonElement serialize(Date source, Type typeOfSource, JsonSerializationContext context) {
             return new JsonPrimitive(Long.toString(source.getTime()));
         }
     }
 
-    private class DateDeserializer implements JsonDeserializer<Date> {
+    private static class DateDeserializer implements JsonDeserializer<Date> {
+        @Override
         public Date deserialize(JsonElement json, Type typeOfTarget, JsonDeserializationContext context) throws JsonParseException {
             long time = Long.parseLong(json.getAsJsonPrimitive().getAsString());
             return new Date(time);
